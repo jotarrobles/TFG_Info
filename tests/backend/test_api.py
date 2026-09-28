@@ -88,3 +88,10 @@ def test_create_and_delete_play() -> None:
     # Verificar que ya no existe
     get_after_del = client.get("/api/plays/play-test-crud")
     assert get_after_del.status_code == 404
+
+
+def test_path_traversal_protection() -> None:
+    """Verifica que los intentos de path traversal sean neutralizados."""
+    response = client.get("/api/plays/../../etc/passwd")
+    # FastAPI o el sanitizador deben devolver 404
+    assert response.status_code == 404

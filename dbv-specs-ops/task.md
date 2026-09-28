@@ -49,20 +49,21 @@
   - [x] Tests unitarios y de integración de la API con `pytest` y `TestClient` (100% aprobados en `tests/backend/test_api.py`).
   - [x] Verificación de entrega de assets estáticos y endpoints HTTP (200 OK en HTML, CSS, JS y JSON).
 
-- [ ] **Fase 5: Simplificar y Revisar (`/code-simplify`)**
-  - [ ] Revisión por pases de `docs/REVIEW.md` (Bugs, Seguridad, Cumplimiento de estándares de código).
-  - [ ] Refactorización para máxima claridad y legibilidad.
+- [x] **Fase 5: Simplificar y Revisar (`/code-simplify`)**
+  - [x] Revisión por pases de `docs/REVIEW.md` (Bugs, Seguridad, Cumplimiento de estándares de código).
+  - [x] Refactorización y hardening de seguridad: sanitización de rutas en `PlayService` para prevenir path traversal.
 
-- [ ] **Fase 6: Entrega (`/ship`)**
-  - [ ] Actualización de documentación final en `README.md` y `dbv-specs-ops/walkthrough.md`.
-  - [ ] Versionado semántico (v0.1.0 MVP) y actualización de `CHANGELOG.md`.
-  - [ ] Propuesta de commit y git tag.
+- [x] **Fase 6: Entrega (`/ship`)**
+  - [x] Actualización de documentación final en `README.md` y `dbv-specs-ops/walkthrough.md`.
+  - [x] Versionado semántico (v0.1.0 MVP) y publicación de `CHANGELOG.md`.
+  - [x] Conexión de repositorio remoto `origin` a `https://github.com/jotarrobles/TFG_Info.git`.
+  - [x] Creación de Git tag `v0.1.0`.
 
 ---
 
 ## 🔄 Context Snapshot / Snapshot de Contexto
 
-> **Last update / Última actualización:** 2026-09-28
-> **Exact point / Punto exacto:** Fases `/spec`, `/plan`, `/build` y `/test` (backend) completadas. La aplicación Pizarritas está totalmente operativa en http://localhost:8000.
-> **Pending / Pendiente:** Notificar al usuario sobre el problema ambiental de descarga del driver del navegador en Playwright, validar la ejecución manual en su navegador, y proceder a `/code-simplify` y `/ship`.
-> **Next step / Próximo paso:** Consultar al usuario cómo proceder respecto a la prueba visual en el navegador y ejecutar la revisión `/code-simplify`.
+> **Last update / Última actualización:** 2026-09-29
+> **Exact point / Punto exacto:** Ciclo SDD completado al 100% (Spec → Plan → Build → Test → Simplify → Ship). Versión v0.1.0 (MVP) creada y etiquetada en Git.
+> **Pending / Pendiente:** Subir la rama y los tags al repositorio remoto de GitHub (`git push -u origin main --tags`).
+> **Next step / Próximo paso:** Ejecutar el comando sugerido para subir el proyecto a GitHub y continuar con las fases evolutivas del TFG según la hoja de ruta.

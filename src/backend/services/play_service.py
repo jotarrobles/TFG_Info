@@ -168,9 +168,16 @@ class PlayService:
         result = sorted(summaries, key=lambda s: s.updated_at, reverse=True)
         return result
 
+    def _sanitize_id(self, play_id: str) -> str:
+        """Sanitiza el ID de la jugada para prevenir path traversal."""
+        clean_id = Path(play_id).name.replace("..", "").strip()
+        result = clean_id if clean_id else "unknown_play"
+        return result
+
     def get_play(self, play_id: str) -> Optional[Play]:
         """Obtiene una jugada completa por su identificador."""
-        target_file = self.storage_dir / f"{play_id}.json"
+        safe_id = self._sanitize_id(play_id)
+        target_file = self.storage_dir / f"{safe_id}.json"
         result: Optional[Play] = None
         
         if target_file.exists():
@@ -186,7 +193,9 @@ class PlayService:
     def save_play(self, play: Play) -> Play:
         """Guarda o actualiza una jugada en almacenamiento JSON."""
         play.updated_at = datetime.now(timezone.utc).isoformat()
-        target_file = self.storage_dir / f"{play.id}.json"
+        safe_id = self._sanitize_id(play.id)
+        play.id = safe_id
+        target_file = self.storage_dir / f"{safe_id}.json"
         
         with open(target_file, "w", encoding="utf-8") as f:
             json.dump(play.model_dump(), f, indent=2, ensure_ascii=False)
@@ -196,7 +205,8 @@ class PlayService:
 
     def delete_play(self, play_id: str) -> bool:
         """Elimina una jugada guardada."""
-        target_file = self.storage_dir / f"{play_id}.json"
+        safe_id = self._sanitize_id(play_id)
+        target_file = self.storage_dir / f"{safe_id}.json"
         result = False
         
         if target_file.exists():

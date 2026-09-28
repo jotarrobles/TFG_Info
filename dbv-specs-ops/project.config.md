@@ -10,6 +10,7 @@
 - **Name:** Pizarritas
 - **Description:** Software de Diseño, Animación y Simulación Táctica de Rugby (TFG)
 - **Author / Company:** Juan Robles Angulo
+- **Repository:** https://github.com/jotarrobles/TFG_Info.git
 - **License:** MIT
 - **Languages:** Python, JavaScript, HTML, CSS
 - **Technologies / Stack:** FastAPI (Python), Three.js (WebGL), Pydantic v2, pytest, HTML5 Canvas / WebGL
