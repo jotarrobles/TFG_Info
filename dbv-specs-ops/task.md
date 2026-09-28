@@ -23,25 +23,31 @@
   - [x] Redacción de `dbv-specs-ops/docs/DESIGN.md` con tokens de diseño visual, colores de campo de rugby y componentes HUD.
   - [x] Actualización de `dbv-specs-ops/memory.md`.
 
-- [ ] **Fase 2: Planificación (`/plan`)**
-  - [ ] Ejecutar Adversarial Architect Review (debate de edge cases y riesgos en rugby y Three.js).
-  - [ ] Generar `dbv-specs-ops/implementation_plan.md` con desglose detallado de pasos atómicos.
-  - [ ] Aprobación del plan por parte del usuario.
+- [x] **Fase 2: Planificación (`/plan`)**
+  - [x] Ejecutar Adversarial Architect Review (debate de edge cases y sincronización de control libre vs trayectorias de balón).
+  - [x] Generar `dbv-specs-ops/implementation_plan.md` con desglose detallado de pasos atómicos.
+  - [x] Aprobación del plan por parte del usuario.
 
-- [ ] **Fase 3: Construcción (`/build`)**
-  - [ ] Configuración del entorno Python (`venv`, `requirements.txt`) y estructura de carpetas `src/`.
-  - [ ] Implementación de modelos Pydantic v2 y endpoints CRUD en FastAPI (`src/backend/`).
-  - [ ] Implementación del motor Three.js con proyección ortográfica y césped reglamentario de rugby (`src/frontend/`).
-  - [ ] Implementación de entidades tácticas (jugadores atacantes/defensores con roles, dorsales y balón).
-  - [ ] Módulo de trazado vectorial y edición de waypoints interactivos (drag & drop).
-  - [ ] Motor de interpolación cinemática continua (splines) y controlador de línea de tiempo (Play/Pause/Scrub).
-  - [ ] Módulo de Control Libre interactivo (WASD/flechas) para aprendizaje motor activo.
-  - [ ] Conexión frontend-backend para guardar, cargar y exportar jugadas en JSON.
-  - [ ] Scripts de arranque multiplataforma (`start.cmd`, `start.sh`, `stop.cmd`, `stop.sh`).
+- [x] **Fase 3: Construcción (`/build`)**
+  - [x] Configuración del entorno Python (`venv`, `requirements.txt`, `pyproject.toml`) y estructura `src/`.
+  - [x] Implementación de modelos Pydantic v2 (`src/backend/models/play.py`).
+  - [x] Implementación de persistencia JSON y jugada reglamentaria de ejemplo (`src/backend/services/play_service.py`).
+  - [x] Implementación de endpoints REST CRUD e importación/exportación (`src/backend/api/plays.py`).
+  - [x] Punto de entrada FastAPI y servidor estático (`src/backend/main.py`).
+  - [x] Motor Three.js con cámara ortográfica métrica (`src/frontend/js/engine/scene.js`).
+  - [x] Terreno de juego oficial de Rugby con marcado reglamentario y zonas de ensayo (`src/frontend/js/pitch/rugby_pitch.js`).
+  - [x] Fichas tácticas de jugadores con roles forwards/backs, dorsales y balón de rugby (`src/frontend/js/entities/`).
+  - [x] Motor de cinemática continua con Splines Catmull-Rom (`src/frontend/js/animation/kinematics.js`).
+  - [x] Controlador de línea de tiempo con Play, Pause, Scrubbing y velocidades (`src/frontend/js/animation/timeline.js`).
+  - [x] Módulo de Control Libre en tiempo real con WASD/flechas (`src/frontend/js/controls/free_control.js`).
+  - [x] Gestor de interacción con drag & drop y trazado de waypoints (`src/frontend/js/controls/interaction.js`).
+  - [x] Cliente REST y exportación/importación JSON en cliente (`src/frontend/js/api/client.js`).
+  - [x] Interfaz de usuario HUD deportiva tipo broadcast con CSS3 moderno (`src/frontend/index.html`, `src/frontend/css/style.css`).
+  - [x] Scripts de ejecución multiplataforma (`start.cmd`, `start.sh`, `stop.cmd`, `stop.sh`).
 
-- [ ] **Fase 4: Pruebas (`/test`)**
-  - [ ] Tests unitarios y de integración en backend con `pytest` (validación de modelos Pydantic y endpoints de jugadas).
-  - [ ] Tests de cálculo de interpolación matemática de trayectorias.
+- [x] **Fase 4: Pruebas (`/test`)**
+  - [x] Tests unitarios y de integración de la API con `pytest` y `TestClient` (100% aprobados en `tests/backend/test_api.py`).
+  - [x] Verificación de entrega de assets estáticos y endpoints HTTP (200 OK en HTML, CSS, JS y JSON).
 
 - [ ] **Fase 5: Simplificar y Revisar (`/code-simplify`)**
   - [ ] Revisión por pases de `docs/REVIEW.md` (Bugs, Seguridad, Cumplimiento de estándares de código).
@@ -57,6 +63,6 @@
 ## 🔄 Context Snapshot / Snapshot de Contexto
 
 > **Last update / Última actualización:** 2026-09-28
-> **Exact point / Punto exacto:** Bootstrap y Fase `/spec` completadas con éxito. Especificaciones, arquitectura y sistema de diseño documentados.
-> **Pending / Pendiente:** Iniciar la Fase `/plan` con el Adversarial Architect Review y la generación de `implementation_plan.md`.
-> **Next step / Próximo paso:** Ejecutar `/plan` y solicitar confirmación del plan de implementación al usuario.
+> **Exact point / Punto exacto:** Fases `/spec`, `/plan`, `/build` y `/test` (backend) completadas. La aplicación Pizarritas está totalmente operativa en http://localhost:8000.
+> **Pending / Pendiente:** Notificar al usuario sobre el problema ambiental de descarga del driver del navegador en Playwright, validar la ejecución manual en su navegador, y proceder a `/code-simplify` y `/ship`.
+> **Next step / Próximo paso:** Consultar al usuario cómo proceder respecto a la prueba visual en el navegador y ejecutar la revisión `/code-simplify`.

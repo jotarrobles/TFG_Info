@@ -1,0 +1,228 @@
+{
+  "id": "play-8-9-blindside",
+  "name": "Ataque 8-9 por Lado Ciego",
+  "description": "Salida del Nº 8 desde formación fija fijando al tercera línea y descarga rápida al medio melé para generar superioridad numérica con el ala en la banda.",
+  "surface_type": "half_pitch",
+  "duration": 6.5,
+  "entities": [
+    {
+      "id": "e-8",
+      "number": 8,
+      "name": "Número 8 (Pick & Go)",
+      "role": "forward",
+      "team": "attack",
+      "color": "#E63946",
+      "avatar_url": null,
+      "metadata_label": "Nº 8",
+      "waypoints": [
+        {
+          "id": "w8-1",
+          "t": 0.0,
+          "x": 0.0,
+          "y": 15.0,
+          "action": "run",
+          "speed": 3.0
+        },
+        {
+          "id": "w8-2",
+          "t": 1.5,
+          "x": 5.0,
+          "y": 20.0,
+          "action": "run",
+          "speed": 5.0
+        },
+        {
+          "id": "w8-3",
+          "t": 3.0,
+          "x": 10.0,
+          "y": 24.0,
+          "action": "pass",
+          "speed": 4.0
+        },
+        {
+          "id": "w8-4",
+          "t": 5.0,
+          "x": 14.0,
+          "y": 26.0,
+          "action": "ruck",
+          "speed": 2.0
+        }
+      ],
+      "is_active": true
+    },
+    {
+      "id": "e-9",
+      "number": 9,
+      "name": "Medio Melé (Support)",
+      "role": "back",
+      "team": "attack",
+      "color": "#E63946",
+      "avatar_url": null,
+      "metadata_label": "Medio Melé",
+      "waypoints": [
+        {
+          "id": "w9-1",
+          "t": 0.0,
+          "x": -1.0,
+          "y": 16.0,
+          "action": "run",
+          "speed": 3.5
+        },
+        {
+          "id": "w9-2",
+          "t": 1.5,
+          "x": 3.0,
+          "y": 21.0,
+          "action": "run",
+          "speed": 5.5
+        },
+        {
+          "id": "w9-3",
+          "t": 3.0,
+          "x": 8.0,
+          "y": 27.0,
+          "action": "run",
+          "speed": 6.0
+        },
+        {
+          "id": "w9-4",
+          "t": 5.0,
+          "x": 16.0,
+          "y": 30.0,
+          "action": "pass",
+          "speed": 5.0
+        }
+      ],
+      "is_active": true
+    },
+    {
+      "id": "e-11",
+      "number": 11,
+      "name": "Ala Izquierdo (Blindside Wing)",
+      "role": "back",
+      "team": "attack",
+      "color": "#E63946",
+      "avatar_url": null,
+      "metadata_label": "Ala",
+      "waypoints": [
+        {
+          "id": "w11-1",
+          "t": 0.0,
+          "x": -10.0,
+          "y": 28.0,
+          "action": "run",
+          "speed": 4.0
+        },
+        {
+          "id": "w11-2",
+          "t": 2.0,
+          "x": 0.0,
+          "y": 30.0,
+          "action": "run",
+          "speed": 7.0
+        },
+        {
+          "id": "w11-3",
+          "t": 4.0,
+          "x": 12.0,
+          "y": 32.0,
+          "action": "run",
+          "speed": 7.5
+        },
+        {
+          "id": "w11-4",
+          "t": 6.0,
+          "x": 25.0,
+          "y": 33.0,
+          "action": "run",
+          "speed": 8.0
+        }
+      ],
+      "is_active": true
+    },
+    {
+      "id": "e-d6",
+      "number": 6,
+      "name": "Flanker Ciego",
+      "role": "forward",
+      "team": "defense",
+      "color": "#1D3557",
+      "avatar_url": null,
+      "metadata_label": "Flanker Def",
+      "waypoints": [
+        {
+          "id": "wd6-1",
+          "t": 0.0,
+          "x": 2.0,
+          "y": 14.0,
+          "action": "run",
+          "speed": 2.0
+        },
+        {
+          "id": "wd6-2",
+          "t": 1.5,
+          "x": 6.0,
+          "y": 18.0,
+          "action": "run",
+          "speed": 4.5
+        },
+        {
+          "id": "wd6-3",
+          "t": 3.5,
+          "x": 11.0,
+          "y": 25.0,
+          "action": "tackle",
+          "speed": 5.0
+        }
+      ],
+      "is_active": true
+    },
+    {
+      "id": "e-ball",
+      "number": 0,
+      "name": "Balón de Rugby",
+      "role": "ball",
+      "team": "neutral",
+      "color": "#E9C46A",
+      "avatar_url": null,
+      "metadata_label": "Balón",
+      "waypoints": [
+        {
+          "id": "wb-1",
+          "t": 0.0,
+          "x": 0.0,
+          "y": 15.0,
+          "action": "run",
+          "speed": 3.0
+        },
+        {
+          "id": "wb-2",
+          "t": 1.5,
+          "x": 5.0,
+          "y": 20.0,
+          "action": "run",
+          "speed": 5.0
+        },
+        {
+          "id": "wb-3",
+          "t": 3.0,
+          "x": 8.0,
+          "y": 27.0,
+          "action": "pass",
+          "speed": 8.0
+        },
+        {
+          "id": "wb-4",
+          "t": 5.0,
+          "x": 16.0,
+          "y": 30.0,
+          "action": "run",
+          "speed": 5.0
+        }
+      ],
+      "is_active": true
+    }
+  ],
+  "created_at": "2026-09-28T15:45:16.345238",
+  "updated_at": "2026-09-28T15:45:16.345414"
+}

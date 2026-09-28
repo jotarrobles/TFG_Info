@@ -1,0 +1,241 @@
+<!--
+  Pizarritas — Software de Diseño, Animación y Simulación Táctica de Rugby
+  Copyright (c) 2026 Juan Robles Angulo
+  Licensed under the MIT License. See LICENSE for details.
+  Built with dbv-specs-ops · https://github.com/davidbuenov/dbv-specs-ops
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizarritas — Simulación Táctica de Rugby</title>
+  
+  <!-- Tipografía Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Motor Gráfico Three.js (r128) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Contenedor del lienzo 3D/WebGL -->
+  <div id="canvas-container"></div>
+
+  <!-- Barra Superior HUD -->
+  <header class="hud-header">
+    <div class="brand">
+      <span class="brand-icon">🏉</span>
+      <h1 class="brand-title">Pizarritas</h1>
+      <span class="brand-badge">Rugby Tactics SDD</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <input type="text" id="play-name-input" class="form-input" style="width: 240px; font-weight: 600;" value="Cargando jugada..." title="Nombre de la jugada táctica">
+      <select id="select-saved-plays" class="play-select" title="Seleccionar jugada guardada">
+        <option value="">Cargando jugadas...</option>
+      </select>
+    </div>
+
+    <div class="hud-actions">
+      <button id="btn-new-play" class="btn btn-secondary" title="Crear nueva pizarra vacía">📄 Nueva</button>
+      <button id="btn-save-play" class="btn btn-primary" title="Guardar en backend FastAPI">💾 Guardar</button>
+      <button id="btn-export-json" class="btn btn-secondary" title="Descargar archivo JSON">⬇️ Exportar</button>
+      <label class="btn btn-secondary" style="margin: 0; cursor: pointer;" title="Cargar archivo JSON">
+        ⬆️ Importar
+        <input type="file" id="file-import-json" accept=".json" style="display: none;">
+      </label>
+      <button id="btn-help" class="btn btn-secondary" title="Atajos de teclado">⌨️ Ayuda</button>
+    </div>
+  </header>
+
+  <!-- Panel Lateral de Herramientas -->
+  <aside class="sidebar-tools">
+    <!-- Sección Modos de Edición -->
+    <div class="tool-section">
+      <span class="tool-title">Herramientas de Edición</span>
+      <div class="tool-grid">
+        <button id="tool-select" class="tool-btn active" title="Seleccionar y arrastrar entidades">
+          <span class="tool-btn-icon">👆</span>
+          <span>Seleccionar</span>
+        </button>
+        <button id="tool-add-waypoint" class="tool-btn" title="Clic en el campo para añadir puntos de paso">
+          <span class="tool-btn-icon">📍</span>
+          <span>Añadir Nodo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sección Añadir Jugadores y Balón -->
+    <div class="tool-section">
+      <span class="tool-title">Añadir Entidades</span>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <button id="tool-add-attacker" class="btn btn-secondary" style="justify-content: flex-start; border-left: 4px solid var(--team-attack);">
+          🔴 + Jugador Ataque
+        </button>
+        <button id="tool-add-defender" class="btn btn-secondary" style="justify-content: flex-start; border-left: 4px solid var(--team-defense);">
+          🔵 + Jugador Defensa
+        </button>
+        <button id="tool-add-ball" class="btn btn-secondary" style="justify-content: flex-start; border-left: 4px solid var(--ball-leather);">
+          🏉 + Balón de Rugby
+        </button>
+      </div>
+    </div>
+
+    <!-- Sección Encuadre de Campo (Framing) -->
+    <div class="tool-section">
+      <span class="tool-title">Encuadre del Terreno</span>
+      <select id="select-framing" class="form-input" style="width: 100%;">
+        <option value="full_pitch">Campo Completo (120m)</option>
+        <option value="half_pitch">Medio Campo (60m)</option>
+        <option value="twenty_two">Zona 22 Metros</option>
+        <option value="scrum">Set-Piece: Melé (Scrum)</option>
+        <option value="lineout">Set-Piece: Touch (Lineout)</option>
+      </select>
+    </div>
+
+    <!-- Inspector de Entidad Seleccionada -->
+    <div class="tool-section">
+      <span class="tool-title">Inspector Táctico</span>
+      <div id="no-selection-msg" style="font-size: 0.75rem; color: var(--on-neutral); font-style: italic;">
+        Selecciona un jugador o el balón en el campo para editar sus propiedades.
+      </div>
+      <div id="entity-inspector-box" class="entity-inspector" style="display: none;">
+        <div class="form-group">
+          <label class="form-label">Nombre / Rol</label>
+          <input type="text" id="prop-name" class="form-input" placeholder="Nombre">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+          <div class="form-group">
+            <label class="form-label">Dorsal</label>
+            <input type="number" id="prop-number" class="form-input" min="0" max="99" value="10">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Color Ficha</label>
+            <input type="color" id="prop-color" class="form-input" style="padding: 2px 4px; height: 32px;" value="#e63946">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+          <div class="form-group">
+            <label class="form-label">Categoría</label>
+            <select id="prop-role" class="form-input">
+              <option value="back">Backs (9-15)</option>
+              <option value="forward">Forwards (1-8)</option>
+              <option value="ball">Balón</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Equipo</label>
+            <select id="prop-team" class="form-input">
+              <option value="attack">Ataque</option>
+              <option value="defense">Defensa</option>
+              <option value="neutral">Neutral</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+          <span id="prop-wp-count" style="font-size: 0.6875rem; color: var(--waypoint-node); font-weight: 600;">0 waypoints</span>
+          <button id="btn-delete-entity" class="btn btn-danger" style="padding: 4px 8px; font-size: 0.6875rem;">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Indicador flotante HUD de Modo Control Libre -->
+  <div id="free-control-hud" class="free-control-hud-badge">
+    <span>🎮</span>
+    <div>
+      <div style="font-size: 0.75rem; text-transform: uppercase;">Modo Control Libre Activo</div>
+      <div style="font-size: 0.6875rem; font-weight: 500;">Pilota con teclas WASD o Flechas</div>
+    </div>
+  </div>
+
+  <!-- Barra Inferior de Reproducción y Timeline -->
+  <footer class="hud-timeline">
+    <div class="playback-controls">
+      <button id="btn-play-pause" class="btn btn-primary" style="padding: 10px 16px; font-size: 1rem;" title="Reproducir / Pausar (Espacio)">
+        <span id="play-icon">▶</span>
+      </button>
+      <button id="btn-stop" class="btn btn-secondary" title="Detener y volver al inicio">
+        <span>⏹</span>
+      </button>
+    </div>
+
+    <div class="timeline-slider-container">
+      <div class="timeline-time-info">
+        <span>Línea de tiempo de la jugada</span>
+        <span id="time-display">00.0s / 10.0s</span>
+      </div>
+      <input type="range" id="timeline-slider" class="timeline-slider" min="0" max="10" step="0.05" value="0">
+    </div>
+
+    <!-- Velocidades de reproducción -->
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <button class="btn btn-secondary btn-speed" data-speed="0.5" style="padding: 6px 10px;">0.5x</button>
+      <button class="btn btn-secondary btn-speed active" data-speed="1.0" style="padding: 6px 10px;">1x</button>
+      <button class="btn btn-secondary btn-speed" data-speed="2.0" style="padding: 6px 10px;">2x</button>
+    </div>
+
+    <!-- Botón Activar Control Libre -->
+    <button id="btn-toggle-free-control" class="btn-free-control" title="Tomar control en tiempo real del jugador seleccionado (Atajo: C)">
+      <span>🎮</span>
+      <span>Control Libre [C]</span>
+    </button>
+  </footer>
+
+  <!-- Modal de Atajos de Teclado -->
+  <div id="modal-shortcuts" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">⌨️ Atajos y Guía de Interacción</h2>
+        <button id="btn-close-modal" class="modal-close">&times;</button>
+      </div>
+      <div>
+        <div class="shortcut-row">
+          <span>Reproducir / Pausar simulación</span>
+          <span class="kbd">Espacio</span>
+        </div>
+        <div class="shortcut-row">
+          <span>Activar / Desactivar Modo Control Libre</span>
+          <span class="kbd">C</span>
+        </div>
+        <div class="shortcut-row">
+          <span>Mover atleta en Modo Control Libre</span>
+          <span class="kbd">W A S D</span> / <span class="kbd">Flechas</span>
+        </div>
+        <div class="shortcut-row">
+          <span>Eliminar jugador o waypoint seleccionado</span>
+          <span class="kbd">Supr / Backspace</span>
+        </div>
+        <div class="shortcut-row">
+          <span>Arrastrar entidad / waypoint</span>
+          <span class="kbd">Clic Izquierdo + Arrastrar</span>
+        </div>
+        <div class="shortcut-row">
+          <span>Añadir nuevo waypoint</span>
+          <span>Activar "Añadir Nodo" y Clic en campo</span>
+        </div>
+      </div>
+      <div style="font-size: 0.75rem; color: var(--on-neutral); text-align: center; margin-top: 8px;">
+        Pizarritas v0.1.0 · Construido con dbv-specs-ops y Three.js
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts de la Aplicación -->
+  <script src="js/api/client.js"></script>
+  <script src="js/engine/scene.js"></script>
+  <script src="js/pitch/rugby_pitch.js"></script>
+  <script src="js/entities/player.js"></script>
+  <script src="js/entities/ball.js"></script>
+  <script src="js/animation/kinematics.js"></script>
+  <script src="js/animation/timeline.js"></script>
+  <script src="js/controls/free_control.js"></script>
+  <script src="js/controls/interaction.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

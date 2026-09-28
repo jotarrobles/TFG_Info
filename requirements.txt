@@ -1,0 +1,12 @@
+# =============================================================================
+# Pizarritas — Software de Diseño, Animación y Simulación Táctica de Rugby
+# Copyright (c) 2026 Juan Robles Angulo
+# Licensed under the MIT License. See LICENSE for details.
+# Built with dbv-specs-ops · https://github.com/davidbuenov/dbv-specs-ops
+# =============================================================================
+
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.6.0
+pytest>=8.0.0
+httpx>=0.27.0
