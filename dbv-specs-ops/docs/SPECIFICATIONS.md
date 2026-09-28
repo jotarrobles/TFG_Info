@@ -1,74 +1,87 @@
-# 📋 Especificaciones: [Nombre del Proyecto]
+# 📋 Especificaciones: Pizarritas
 
 > **Fase:** `/spec` (Especificación)
-> **Estado:** En Definición / Validado
-> **Última Revisión:** [Fecha]
+> **Estado:** Validado
+> **Última Revisión:** 2026-09-28
+> **Documento Origen:** `especificacionInicial.md` (Propuesta de TFG)
 
 ---
 
 ## 🎯 1. Contexto y Objetivos
-*Basado en la filosofía de "entender el problema antes de proponer la solución".*
 
-- **Problema:** [Describe el dolor o necesidad que motiva este proyecto. ¿Qué está roto o qué falta?]
-- **Objetivo (Éxito):** [¿Cómo sabremos que este proyecto ha tenido éxito? Define un resultado tangible.]
-
-## 👥 2. Usuarios y Escenarios
-*Identifica para quién construimos y en qué situaciones usarán el sistema.*
-
-- **Perfil de Usuario:** [Ej: Desarrollador, Administrador de Hospital, Usuario final].
-- **Escenarios Clave:**
-  - *Escenario A:* [Ej: "El usuario necesita consultar el historial médico en menos de 2 segundos"].
-  - *Escenario B:* [Ej: "El sistema debe alertar si hay una colisión de horarios"].
-
-## ✨ 3. Funcionalidades Principales (Requisitos)
-*El "Qué" del sistema. Estas tareas se trasladarán luego a `task.md`.*
-
-- [ ] **Funcionalidad A:** [Descripción breve y criterio de aceptación].
-- [ ] **Funcionalidad B:** [Descripción breve y criterio de aceptación].
-
-## 🏗️ 4. Propuesta de Solución Técnica (Resumen)
-*Enlace directo con `ARCHITECTURE.md`.*
-
-- **Enfoque:** [Breve descripción de la solución técnica elegida].
-- **Dependencias Críticas:** [Ej: API externa, Servidor MCP específico].
-- **Oportunidades de Skills y MCPs**: [Analizar si el proyecto se beneficia de la creación de un servidor MCP local para conectar con la lógica interna, o de paquetes de habilidades dinámicas (skills/) para facilitar la orquestación del agente].
-- **Sistema de Diseño:** Si el proyecto tiene interfaz de usuario, ver `docs/DESIGN.md` para tokens de color, tipografía y componentes. Se puede enriquecer opcionalmente mediante **Impeccable** (auditorías y critique de diseño) y **SkillUI** (ingeniería inversa de paletas y estilos). Ver `docs/DESIGN_ENRICHMENT.md` para más información.
-
-### 4.1. Agent Readiness Checklist (Proyectos Web)
-*Si la configuración de Agent Readiness (Web) está activa, documentar las tareas de descubrimiento e integración para agentes inteligentes:*
-- [ ] **robots.txt**: Configurar con directiva `Content-Signal: ai-train=no, search=yes, ai-input=yes` y ruta al sitemap. Exponer el directorio del plugin.
-- [ ] **llms.txt**: Crear mapa de contenidos en Markdown para agilizar la lectura semántica de la IA.
-- [ ] **auth.md**: Describir los procesos de registro y acceso para los bots.
-- [ ] **Metadatos en `.well-known/`**: Crear `api-catalog`, `oauth-protected-resource`, `oauth-authorization-server` y `http-message-signatures-directory`.
-- [ ] **Agent Plugin**: Crear el paquete universal de herramientas y habilidades en `.well-known/agent-plugin/` (con manifiesto `plugin.json` y config `mcp.json` válidos según el estándar 1.0.0).
-- [ ] **Negociación de Markdown y Links**: Configurar el enrutamiento para retornar texto plano Markdown con la cabecera `Accept: text/markdown` y definir la cabecera HTTP `Link` apuntando al plugin (`Link: </.well-known/agent-plugin/plugin.json>; rel="agent-plugin"; type="application/json"`).
-
-## 🚫 5. Fuera de Alcance (Out of Scope)
-*Vital para evitar el "scope creep" (crecimiento descontrolado del proyecto).*
-
-- [ ] [Funcionalidad o aspecto que NO se abordará en esta fase/versión].
-
-## ⚠️ 6. Riesgos y Mitigación
-*Anticipar problemas es de ingenieros senior.*
-
-- **Riesgo:** [Ej: La API externa tiene límites de tasa (Rate limiting)].
-  - **Mitigación:** [Ej: Implementar un sistema de caché local].
-- **Riesgo de Seguridad y Privacidad (IA/Datos):** [Ej: Fuga de secretos, inyección de código vulnerable por parte del agente, o alucinación de paquetes dependientes].
-  - **Mitigación:** [Ej: Implementar hooks deterministas de pre-commit con escaneo de secrets como gitleaks, o auditoría obligatoria de dependencias en /code-simplify].
-- **Riesgo de Consumo de Contexto de IA / Mal Rastreo de Bots:** [Ej: Los agentes inteligentes consumen demasiados tokens interpretando código HTML complejo o se pierden en los formularios de registro].
-  - **Mitigación:** [Ej: Implementar un archivo llms.txt con el mapa web en Markdown y configurar la negociación dinámica de contenido en formato text/markdown].
-
-## ❓ 7. Preguntas Abiertas
-*Cosas que aún no sabemos o decisiones que dependen del usuario.*
-
-- [ ] ¿Necesitamos soporte offline desde el primer día?
-- [ ] ¿Qué volumen de datos esperamos manejar en el primer mes?
-
-## 🧪 8. Criterios de Evaluación y Evals (No Deterministas)
-*Define las rúbricas y métricas de calidad para evaluar la salida de componentes no deterministas (IA, prompts, etc.) integrados en la fase /test.*
-
-- [ ] **Métricas de Output:** [Ej: Precisión de respuesta, conformidad de formato JSON, ausencia de alucinaciones].
-- [ ] **Métricas de Trayectoria:** [Ej: Eficiencia en el uso de herramientas MCP, límite de llamadas a la API].
+- **Problema:** En el rugby de alto rendimiento, el diseño y preparación táctica dependen con frecuencia de pizarras analógicas estáticas o herramientas de dibujo vectorial genéricas. Estas herramientas carecen de modelado dinámico, no representan la cinemática de los jugadores, no permiten validar intervalos temporales y no ofrecen interactividad práctica para el deportista.
+- **Objetivo (Éxito):** Desarrollar **Pizarritas**, una plataforma software integral que una la agilidad de la pizarra táctica tradicional con la potencia de un motor de simulación en tiempo real (Three.js/WebGL en frontend y FastAPI en backend), permitiendo diagramar, animar con interpolación continua, simular interactivamente con "control libre" del atleta y persistir/compartir jugadas en formato estructurado JSON.
 
 ---
-**Instrucción para la IA:** No pases a la fase `/plan` hasta que las "Preguntas Abiertas" críticas hayan sido resueltas o tengan un camino de solución definido.
+
+## 👥 2. Usuarios y Escenarios
+
+- **Perfil de Usuario:**
+  - **Cuerpo Técnico / Entrenadores:** Diseñan jugadas tácticas, ajustan líneas de ataque/defensa, establecen tiempos y sincronismos, y configuran entrenamientos.
+  - **Jugadores / Atletas:** Visualizan las animaciones tácticas, comprenden su rol dentro del colectivo y practican la toma de decisiones y trayectorias mediante el modo de "control libre".
+- **Escenarios Clave:**
+  - *Escenario A (Pizarra Táctica Cenital):* El entrenador posiciona rápidamente a los jugadores en un campo de rugby (o set-piece como scrum/lineout/22m), asigna vectores de carrera y pases con drag-and-drop en proyección ortográfica.
+  - *Escenario B (Animación Cinemática Continua):* El sistema calcula en tiempo real las trayectorias suaves (splines Catmull-Rom) a través de los waypoints fijados, sincronizando la velocidad y tiempos de llegada.
+  - *Escenario C (Control Libre para Aprendizaje Activo):* Durante la reproducción de la jugada, el atleta toma el control de su avatar (con teclado o puntero), desvinculándose de la ruta precalculada mientras el resto del equipo continúa la ejecución programada.
+  - *Escenario D (Persistencia e Intercambio):* Guardar la jugada en la base de datos a través de la API REST de FastAPI y exportar/importar en formato JSON estructurado.
+
+---
+
+## ✨ 3. Funcionalidades Principales (Requisitos del MVP)
+
+- [ ] **REQ-1: Vista Cenital y Lienzo Táctico (Three.js Orthographic Canvas)**
+  - Representación métrica y ortográfica del campo de rugby con dimensiones y líneas oficiales (ensayo, 22m, 10m, 50m, 5m, 15m).
+  - Soporte de encuadres: Campo completo, Medio campo, Zona de 22 metros y estructuras de set-piece (scrum y lineout).
+  - Navegación ágil (pan, zoom ortográfico) y manipulación interactiva de entidades.
+- [ ] **REQ-2: Gestión de Entidades (Jugadores y Balón)**
+  - Entidades interactivas para equipo atacante y equipo defensor con identificación cromática configurable.
+  - Roles específicos de rugby: Distinción entre forwards (1-8) y backs (9-15), dorsales, nombres y etiquetas de texto asociadas.
+  - Entidad Balón con estado de posesión o trayectoria de pase/patada.
+- [ ] **REQ-3: Módulo de Trazado Vectorial y Waypoints**
+  - Trazado de trayectorias mediante puntos de paso (waypoints) editables (drag & drop).
+  - Tipos de vectores: Carrera del jugador (línea continua/curva), Pase del balón (línea discontinua), Patada (línea punteada o arco).
+- [ ] **REQ-4: Motor de Animación e Interpolación Cinemática**
+  - Cálculo de trayectorias continuas mediante interpolación Spline (Catmull-Rom o Bézier cúbico).
+  - Controles de reproducción interactiva: Play, Pause, Rewind, Scrubbing de línea de tiempo y ajuste de velocidad (0.5x, 1x, 2x).
+- [ ] **REQ-5: Módulo de Control Libre (Active Learning)**
+  - Posibilidad de seleccionar un jugador durante la reproducción y tomar su control directo en tiempo real (WASD / Flechas / Puntero).
+  - Desacoplamiento temporal de la trayectoria programada manteniendo la ejecución del resto de jugadores.
+- [ ] **REQ-6: Backend de Persistencia y API REST (FastAPI)**
+  - Modelos de datos estructurados con Pydantic v2 (Esquema de Jugada, Entidades, Waypoints, Metadatos).
+  - Endpoints CRUD para crear, listar, consultar, actualizar y eliminar jugadas tácticas.
+  - Importación y exportación de ficheros JSON portables y validados.
+
+---
+
+## 🏗️ 4. Propuesta de Solución Técnica (Resumen)
+
+- **Frontend:** Single Page Application modular utilizando **Three.js** con cámara ortográfica (`OrthographicCamera`) para garantizar fidelidad espacial y métrica sin distorsión de perspectiva, controles de puntero basados en raycasting para selección y drag-and-drop, y panel de control flotante en CSS3 moderno.
+- **Backend:** **FastAPI** (Python 3.11+) con modelos Pydantic v2 para validación estricta de esquemas tácticos, almacenamiento en SQLite/JSON para persistencia local de jugadas, y endpoints REST documentados automáticamente con OpenAPI/Swagger.
+- **Sistema de Diseño:** Definido en `docs/DESIGN.md`, utilizando un tema táctico atlético (verde campo césped técnico `#1E5128`, líneas blancas `#F4F6F0`, ataque `#E63946`, defensa `#1D3557`, balón cuero/oro `#E9C46A`, fondo de interfaz dark `#12161A`).
+
+---
+
+## 🚫 5. Fuera de Alcance (Out of Scope para el MVP)
+
+- [ ] Simulación 3D multicámara inmersiva y vista POV (Point-of-View en primera persona con modelos 3D poligonales de jugadores).
+- [ ] Inteligencia artificial autónoma reactiva para la defensa (blitz defense o drift defense con árboles de comportamiento).
+- [ ] Modelado biométrico avanzado con simulación física de placajes / colisiones de cuerpos rígidos con masa variable.
+- [ ] Autenticación multi-usuario y roles de club (se deja para versión post-MVP).
+
+---
+
+## ⚠️ 6. Riesgos y Mitigación
+
+- **Riesgo 1: Complejidad en la sincronización de animaciones e interpolación con Three.js.**
+  - *Mitigación:* Usar curvas normalizadas `THREE.CatmullRomCurve3` con parametrización por longitud de arco y un bucle de tiempo global (delta time) que asegure sincronismo independiente de los FPS.
+- **Riesgo 2: Pérdida de control o colisiones anómalas en el modo "Control Libre".**
+  - *Mitigación:* Acotar el movimiento a los límites del campo con clamp de coordenadas y aplicar interpolación suave al devolver el control a la trayectoria automatizada.
+- **Riesgo 3: Formato JSON inconsistente al importar jugadas.**
+  - *Mitigación:* Validación exhaustiva en el backend con esquemas Pydantic v2, rechazando datos malformados con mensajes descriptivos.
+
+---
+
+## ❓ 7. Preguntas Resueltas y Decisiones de Diseño
+
+- **¿Vista 2D o 3D?** Se utiliza Three.js con cámara ortográfica (cenital 2D) como vista principal del MVP, manteniendo la infraestructura 3D lista para las extensiones futuras.
+- **¿Formato de persistencia?** Esquemas JSON serializables tanto en el cliente como en el backend con FastAPI.

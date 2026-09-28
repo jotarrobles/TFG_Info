@@ -1,51 +1,62 @@
-# Backlog - dbv-specs-ops v2.8.0 (AI-Native SDLC Loop Closure & Guardrails)
+# Backlog - Pizarritas (Software de Diseño, Animación y Simulación Táctica de Rugby)
 
 ## Contexto del Proyecto (Context Snapshot)
-* **Objetivo**: Integrar de forma curada el [AI-Native SDLC Playbook (Anthropic)](https://claude.com/blog/the-ai-native-sdlc-playbook) — cierre autónomo del loop (Fase 7 Maintain, opcional), revisión de código por pases con severidad, guardarraíles deterministas y trabajo paralelo formalizado — más un fix de usabilidad real (comandos de fase escuetos mal interpretados) y la división del README en dos ficheros de un solo idioma.
-* **Estado actual**: ENTREGA COMPLETADA (v2.8.0 commiteada y pusheada a `origin/master`, commit `7c33e42`).
-* **Última decisión técnica**: El pase "Cumplimiento" de `docs/REVIEW.md` audita ahora explícitamente los `<coding_standards>` de `MASTER_PROMPT.md` (no solo specs/arquitectura), porque se detectó código real con 5-6 `return` por función pese a que la regla ya estaba declarada "obligatoria" — la sola declaración advisory no bastaba.
-* **Próximo paso**: Ninguno pendiente en el ciclo de esta versión. `task.md`, `memory.md` y `walkthrough.md` sincronizados en un commit de seguimiento tras el cierre.
+* **Objetivo:** Desarrollar el MVP de **Pizarritas** combinando una pizarra táctica cenital con Three.js (WebGL), animación continua cinemática (splines), modo de control libre interactivo y backend de persistencia con FastAPI.
+* **Estado actual:** Fase `/spec` completada y validada. Preparando el pase a `/plan` para el desglose técnico y aprobación del plan de implementación.
+* **Última decisión técnica:** Selección de Three.js (OrthographicCamera) en frontend y FastAPI con Pydantic v2 en backend.
+* **Próximo paso:** Ejecutar `/plan` (Adversarial Architect Review y desglose de tareas atómicas del MVP).
+
+---
 
 ## Checklist de Tareas
 
-- [x] **Fase 1: Especificaciones (`/spec`, implícita)**
-  - [x] Analizar el playbook de Anthropic y los 6 documentos generados en una sesión previa (`docs/novedades2.8/`, ya integrados y eliminados).
-  - [x] Decidir alcance de integración con el usuario (curada completa, vs. núcleo, vs. todo-menos-Maintain) → elegido: curada completa.
+- [x] **Bootstrap e Inicialización del Framework SDD (`dbv-specs-ops v2.8.0`)**
+  - [x] Estructuración de `dbv-specs-ops/` y archivos de activación en raíz (`GEMINI.md`, `ANTIGRAVITY.md`, `CLAUDE.md`, `.windsurfrules`, `.github/copilot-instructions.md`).
+  - [x] Configuración de `project.config.md` (Pizarritas, MIT, Juan Robles Angulo, Three.js + FastAPI).
+  - [x] Creación de `LICENSE`, `.gitignore` y `README.md` bilingüe en la raíz.
+  - [x] Repositorio Git inicializado con primer commit.
 
-- [x] **Fase 3: Construcción (`/build`)**
-  - [x] **1. Documentos nuevos en `docs/`**: `MAINTAIN.md` (Fase 7 opcional), `REVIEW.md`, `GUARDRAILS.md`, `PARALLEL_WORK.md`, `SOURCE_OF_TRUTH.md`, `METRICS.md`.
-  - [x] **2. Infraestructura opcional**: `evals/README.md`, `evals/example-spec-eval.json`, `scripts/run-evals.sh` (regresión de la configuración del agente, no del código de proyecto).
-  - [x] **3. Fix de comandos de fase escuetos**: regla de cascada en `docs/MASTER_PROMPT.md` (`<workflow>`) + `.claude/commands/{spec,plan,build,test,code-simplify,ship,maintain}.md` (comandos nativos de Claude Code con autocompletado).
-  - [x] **4. Enganches en `MASTER_PROMPT.md`**: `/plan` → `PARALLEL_WORK.md`; `/code-simplify` → los 3 pases de `REVIEW.md`; `/ship` → gate de hallazgos Crítico; `<boundaries>` → `GUARDRAILS.md`; `<context_management>` → `SOURCE_OF_TRUTH.md`; Fase 7 documentada al final de `<workflow>`.
-  - [x] **5. Metadatos**: `project.config.md` (versión → `2.8.0`), `docs/UPGRADE_PROMPT.md` (manifest v2.8.0 completo, nuevas URLs de descarga, mensaje de cierre), `README.md`/`README.en.md`, `docs/README.md`.
+- [x] **Fase 1: Especificación (`/spec`)**
+  - [x] Análisis completo de la propuesta de TFG `especificacionInicial.md`.
+  - [x] Redacción de `dbv-specs-ops/docs/SPECIFICATIONS.md` con requisitos funcionales del MVP (REQ-1 a REQ-6) y delimitación fuera de alcance.
+  - [x] Redacción de `dbv-specs-ops/docs/ARCHITECTURE.md` con arquitectura Three.js + FastAPI y estructura de directorios.
+  - [x] Redacción de `dbv-specs-ops/docs/DESIGN.md` con tokens de diseño visual, colores de campo de rugby y componentes HUD.
+  - [x] Actualización de `dbv-specs-ops/memory.md`.
 
-- [x] **Fase 4: Pruebas y Verificación (`/test`)**
-  - [x] `bash -n scripts/run-evals.sh` (sintaxis) y validación del JSON de ejemplo.
-  - [x] Etiquetas XML de `MASTER_PROMPT.md` balanceadas tras las inserciones.
-  - [x] Paridad manifest ↔ disco entre `docs/UPGRADE_PROMPT.md` y los ficheros nuevos.
+- [ ] **Fase 2: Planificación (`/plan`)**
+  - [ ] Ejecutar Adversarial Architect Review (debate de edge cases y riesgos en rugby y Three.js).
+  - [ ] Generar `dbv-specs-ops/implementation_plan.md` con desglose detallado de pasos atómicos.
+  - [ ] Aprobación del plan por parte del usuario.
 
-- [x] **Fase 5: Simplificar (`/code-simplify`)**
-  - [x] Extender el pase "Cumplimiento" de `docs/REVIEW.md` para auditar `<coding_standards>` (un solo `return` + guard clauses, patrón Result, tipado estricto) — gap detectado por el usuario tras ver código real con múltiples `return` por función.
-  - [x] Añadir a `docs/GUARDRAILS.md` un ejemplo concreto de heurística pre-commit para esa regla.
+- [ ] **Fase 3: Construcción (`/build`)**
+  - [ ] Configuración del entorno Python (`venv`, `requirements.txt`) y estructura de carpetas `src/`.
+  - [ ] Implementación de modelos Pydantic v2 y endpoints CRUD en FastAPI (`src/backend/`).
+  - [ ] Implementación del motor Three.js con proyección ortográfica y césped reglamentario de rugby (`src/frontend/`).
+  - [ ] Implementación de entidades tácticas (jugadores atacantes/defensores con roles, dorsales y balón).
+  - [ ] Módulo de trazado vectorial y edición de waypoints interactivos (drag & drop).
+  - [ ] Motor de interpolación cinemática continua (splines) y controlador de línea de tiempo (Play/Pause/Scrub).
+  - [ ] Módulo de Control Libre interactivo (WASD/flechas) para aprendizaje motor activo.
+  - [ ] Conexión frontend-backend para guardar, cargar y exportar jugadas en JSON.
+  - [ ] Scripts de arranque multiplataforma (`start.cmd`, `start.sh`, `stop.cmd`, `stop.sh`).
 
-- [x] **Fase 6: Entrega (`/ship`, manual — sin usar los comandos de fase sobre este propio repo)**
-  - [x] Dividir `README.md` bilingüe en `README.md` (español, principal) y `README.en.md` (inglés), con enlace cruzado de idioma y diagramas `mermaid` actualizados (nodo opcional Maintain, pase de revisión en Simplify).
-  - [x] Corregir el ancla rota `#adoption` en el índice del README (bug preexistente, no introducido en esta versión).
-  - [x] Borrar `docs/novedades2.8/` (contenido ya integrado) y `docs/thenewsdlcwithvibecoding.pdf` (limpieza de espacio, sin referencias cruzadas).
-  - [x] Actualizar el pie de comparación de `CHANGELOG.md` (`[Sin publicar]` → `v2.8.0...HEAD`, nuevo `[2.8.0]: v2.7.0...v2.8.0`).
-  - [x] Commit `Version 2.8.0` (`7c33e42`) y push a `origin/master`.
+- [ ] **Fase 4: Pruebas (`/test`)**
+  - [ ] Tests unitarios y de integración en backend con `pytest` (validación de modelos Pydantic y endpoints de jugadas).
+  - [ ] Tests de cálculo de interpolación matemática de trayectorias.
 
-- [ ] **Sin publicar (2026-09-28): lección AppImage + AppImageHub**, pendiente de incluir en la próxima versión.
-  - [x] `docs/NATIVE_APPS_RELEASE_CI.md` §6ter y paso nuevo en la plantilla `release-linux.yml` de §9.
-  - [x] `docs/MARKETPLACE_PUBLISHING.md` §1: fila de AppImageHub.
-  - [x] `CHANGELOG.md` → `[Sin publicar]`.
-  - [ ] Versionar (probablemente 2.8.1, solo documentación) y sincronizar los proyectos que usan el framework.
+- [ ] **Fase 5: Simplificar y Revisar (`/code-simplify`)**
+  - [ ] Revisión por pases de `docs/REVIEW.md` (Bugs, Seguridad, Cumplimiento de estándares de código).
+  - [ ] Refactorización para máxima claridad y legibilidad.
+
+- [ ] **Fase 6: Entrega (`/ship`)**
+  - [ ] Actualización de documentación final en `README.md` y `dbv-specs-ops/walkthrough.md`.
+  - [ ] Versionado semántico (v0.1.0 MVP) y actualización de `CHANGELOG.md`.
+  - [ ] Propuesta de commit y git tag.
 
 ---
 
 ## 🔄 Context Snapshot / Snapshot de Contexto
 
-> **Last update / Última actualización:** 2026-09-01
-> **Exact point / Punto exacto:** v2.8.0 publicada en `origin/master` (commit `7c33e42`). `task.md`, `memory.md` y `walkthrough.md` sincronizados en el commit de seguimiento inmediato.
-> **Pending / Pendiente:** Ninguno para esta versión.
-> **Next step / Próximo paso:** Retomar el backlog normal del framework en la próxima sesión.
+> **Last update / Última actualización:** 2026-09-28
+> **Exact point / Punto exacto:** Bootstrap y Fase `/spec` completadas con éxito. Especificaciones, arquitectura y sistema de diseño documentados.
+> **Pending / Pendiente:** Iniciar la Fase `/plan` con el Adversarial Architect Review y la generación de `implementation_plan.md`.
+> **Next step / Próximo paso:** Ejecutar `/plan` y solicitar confirmación del plan de implementación al usuario.
